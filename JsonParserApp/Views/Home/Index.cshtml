@@ -1,1 +1,41 @@
 ﻿
+<input type="file" id="JsonFile">
+<input type="button" value="btnDisplay" id="btnGo" />
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#btnGo').click(function (e) {
+
+                var jsonObject = "";
+
+                var file = document.getElementById('JsonFile').files[0];
+                if (file) {
+                    // create reader
+                    var reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onload = function (e) {
+                        // browser completed reading file
+                        jsonObject = e.target.result;
+
+                        //Posting JSON object to action controller
+                        $.ajax({
+                            url: "@Url.Action("JsonParser")",
+                            type: "POST",
+                            data: jsonObject,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            success: function (response) {
+                                alert(response);
+                            }
+                        });
+                    };
+                }
+            });
+        });
+
+    </script>
+}
