@@ -1,7 +1,6 @@
 ﻿
 <video autoplay poster="~/Content/images/2.jpg" id="bgvid" loop>
-    @*<source src="" type="video/webm">*@
-    @*<source src="~/Content/videos/cv-movie.m4v" type="video/mp4">*@
+    <source src="~/Content/videos/cv-movie.m4v" type="video/mp4">
 </video>
 
 <div id="formGroup" class="form-group form-group-lg center">
@@ -13,59 +12,81 @@
     <span class='label label-info' id="upload-file-info" style="margin-top:10px;"></span>
 </div>
 
-    <div class="col-md-12" id="Result" style="display:none; margin-top:30px;">
+<div class="col-md-12" id="Result" style="display:none; margin-top:30px;">
 
-    </div>
+</div>
 
-    <input type="button" value="Browse another JSON resume.." id="btnBack" class="btn btn-warning" style="display:none; margin:auto; margin-top:40px;"/>
+<input type="button" value="Browse another JSON resume.." id="btnBack" class="btn btn-warning" style="display:none; margin:auto; margin-top:40px; margin-bottom:30px;" />
 
-    @section scripts {
-        <script type="text/javascript">
-            $(function () {
-                $('#btnGo').click(function (e) {
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#btnGo').click(function (e) {
 
-                    $("#formGroup").css("display","none");
+                $("#formGroup").css("display", "none");
 
-                    var jsonObject = "";
+                var jsonObject = "";
 
-                    var file = document.getElementById('JsonFile').files[0];
-                    if (file) {
-                        // create reader
-                        var reader = new FileReader();
-                        reader.readAsText(file);
-                        reader.onload = function (e) {
-                            // browser completed reading file
-                            jsonObject = e.target.result;
-
-                            //Posting JSON object to action controller
-                            $.ajax({
-                                url: "@Url.Action("JsonParser")",
-                                type: "POST",
-                                data: jsonObject,
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "html",
-                                error: function (response) {
-                                    alert(response.responseText);
-                                },
-                                success: function (response) {
-                                    $("#Result").html(response).css("display", "block");
-                                    $("#btnBack").css("display", "block");
-                                }
-                            });
-                        };
+                //Cheking file format is JSON
+                var input = $('input[type="file"]').val();
+                var exts = ['json'];
+                if (input) {
+                    // split file name at dot
+                    var get_ext = input.split('.');
+                    // reverse name to check extension
+                    get_ext = get_ext.reverse();
+                    // check file type is valid as given in 'exts' array
+                    if ($.inArray(get_ext[0].toLowerCase(), exts) > -1) {
+                    } else {
+                        alert('File should be in JSON format!');
+                        location.reload();
                     }
-                });
+                }
+
+                var file = document.getElementById('JsonFile').files[0];
+
+                if (file) {
+                    // create reader
+                    var reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onload = function (e) {
+                        // browser completed reading file
+                        jsonObject = e.target.result;
+
+                        //Posting JSON object to action controller
+                        $.ajax({
+                            url: "@Url.Action("JsonParser")",
+                            type: "POST",
+                            data: jsonObject,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "html",
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            success: function (response) {
+                                $("#Result").html(response).css("display", "block");
+                                $("#btnBack").css("display", "block");
+                            }
+                        });
+                    };
+                } else {
+                    //Cheking file is not empty
+                    alert("Please select a file!");
+                    location.reload();
+                }
             });
+        });
 
-            $('#btnBack').click(function () {
-                location.reload();
-            });
+        $('#btnBack').click(function () {
+            $("#Result").css("display", "none");
+            $("#btnBack").css("display", "none");
+            $("#formGroup").css("display", "block");
+        });
 
-            var vid = document.getElementById("bgvid");
+        var vid = document.getElementById("bgvid");
 
-            function vidFade() {
-                vid.classList.add("stopfade");
-            }
-
-        </script>
-    }
+        function vidFade() {
+            vid.classList.add("stopfade");
+        }
+    </script>
+}

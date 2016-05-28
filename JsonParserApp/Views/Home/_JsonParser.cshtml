@@ -1,0 +1,143 @@
+﻿@model JsonParserApp.Models.ResumeModel
+
+@*Personal Details*@
+<div style="border-top:8px solid blue; border-bottom:5px solid black; background-color:white;">
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="text-align:center; font-size:xx-large; font-weight:bold;">@Model.Basics[0].Name</div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="text-align:center; font-weight:bold;">@Model.Basics[0].Address , @Model.Basics[0].City, @Model.Basics[0].PostalCode</div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="text-align:center; font-weight:bold;">Phone: @Model.Basics[0].Phone | Skype: @Model.Basics[0].Skype | E-mail: @Model.Basics[0].Email</div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="text-align:center; font-weight:bold; margin-bottom:20px;">LinkedIn: @Model.Basics[0].Linkedin</div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+@*Programming Skills/Organizational Skills*@
+<div style="border-bottom:5px solid black; background-color:white;">
+    <div class="row" style="padding-top:20px;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="text-align:center; font-size:xx-large; font-weight:bold; text-decoration:underline;">@Model.Basics[0].Label</div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="margin-top:10px; margin-bottom:10px;">
+        <div class="col-md-12">
+            <p style="padding-left:10px; padding-right:20px; font-weight:bold;">
+                @Model.Basics[0].Summary
+            </p>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom:20px;">
+        <div class="col-md-6" style="font-weight:bold; padding-left:50px;">
+            <h4 style="text-decoration:underline;">Programming skills</h4>
+            <ul>
+                <li>@Model.Skills[0].Skill</li>
+                <li>@Model.Skills[1].Skill</li>
+                <li>@Model.Skills[2].Skill</li>
+                <li>@Model.Skills[3].Skill</li>
+                <li>@Model.Skills[4].Skill</li>
+            </ul>
+        </div>
+        <div class="col-md-6" style="font-weight:bold;">
+            <h4 style="text-decoration:underline;">Organizational skills</h4>
+            <ul>
+                <li>@Model.OrganizationalSkills[0].OrganizationalSkill</li>
+                <li>@Model.OrganizationalSkills[1].OrganizationalSkill</li>
+                <li>@Model.OrganizationalSkills[2].OrganizationalSkill</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div style="background-color:white; border-bottom:12px solid blue;">
+    @*Work Experience-1*@
+    <div class="row" style="padding-top:20px; padding-left:20px; font-weight:bold;">
+        <h3 style="padding-left:10px; text-decoration:underline;">Work Experience</h3>
+        <div class="col-md-4">@Model.Works[0].Position</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">@Model.Works[0].Company</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">@Model.Works[0].StartDate - @Model.Works[0].EndDate</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="margin-top:10px; margin-bottom:10px;">
+        <div class="col-md-12">
+            <p style="padding-left:10px; padding-right:20px; font-weight:bold;">
+                @Model.Works[0].Summary
+            </p>
+        </div>
+    </div>
+
+    @*Work Experience-2*@
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">@Model.Works[1].Position</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">@Model.Works[1].Company</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">@Model.Works[1].StartDate - @Model.Works[0].EndDate</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-12">
+            <p style="padding-left:10px; padding-right:20px; font-weight:bold;">
+                @Model.Works[1].Summary
+            </p>
+        </div>
+    </div>
+
+    @*Education*@
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <h3 style="padding-left:10px; text-decoration:underline;">Education</h3>
+        <div class="col-md-4">@Model.Educations[0].FieldOfStudy - @Model.Educations[0].Institution</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">Thesis Title: @Model.Educations[0].ThesisTitle</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <div class="col-md-4">Grade: @Model.Educations[0].Gpa</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+
+    @*Language Skill*@
+    <div class="row" style="padding-left:20px; font-weight:bold;">
+        <h3 style="padding-left:10px; text-decoration:underline;">Language Skill</h3>
+        <div class="col-md-4">@Model.Languages[0].Name: @Model.Languages[0].Level</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-left:20px; font-weight:bold; padding-bottom:40px;">
+        <div class="col-md-4">@Model.Languages[0].Certificate: @Model.Languages[0].Score</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
