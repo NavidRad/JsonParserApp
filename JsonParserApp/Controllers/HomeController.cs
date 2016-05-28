@@ -22,7 +22,7 @@ namespace JsonParserApp.Controllers
         {
             if (model != null)
             {
-                return View(model);
+                return PartialView("_JsonParser", model);
             }
             else
             {

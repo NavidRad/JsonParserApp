@@ -1,41 +1,71 @@
 ﻿
-<input type="file" id="JsonFile">
-<input type="button" value="btnDisplay" id="btnGo" />
+<video autoplay poster="~/Content/images/2.jpg" id="bgvid" loop>
+    @*<source src="" type="video/webm">*@
+    @*<source src="~/Content/videos/cv-movie.m4v" type="video/mp4">*@
+</video>
 
-@section scripts {
-    <script type="text/javascript">
-        $(function () {
-            $('#btnGo').click(function (e) {
+<div id="formGroup" class="form-group form-group-lg center">
+    <label class="btn btn-primary" for="JsonFile">
+        <input id="JsonFile" type="file" style="display:none;" onchange="$('#upload-file-info').html($(this).val()).css('display', 'block');">
+        Browse resume in JSON format
+    </label>
+    <input type="button" value="Go" id="btnGo" class="btn btn-success" />
+    <span class='label label-info' id="upload-file-info" style="margin-top:10px;"></span>
+</div>
 
-                var jsonObject = "";
+    <div class="col-md-12" id="Result" style="display:none; margin-top:30px;">
 
-                var file = document.getElementById('JsonFile').files[0];
-                if (file) {
-                    // create reader
-                    var reader = new FileReader();
-                    reader.readAsText(file);
-                    reader.onload = function (e) {
-                        // browser completed reading file
-                        jsonObject = e.target.result;
+    </div>
 
-                        //Posting JSON object to action controller
-                        $.ajax({
-                            url: "@Url.Action("JsonParser")",
-                            type: "POST",
-                            data: jsonObject,
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            error: function (response) {
-                                alert(response.responseText);
-                            },
-                            success: function (response) {
-                                alert(response);
-                            }
-                        });
-                    };
-                }
+    <input type="button" value="Browse another JSON resume.." id="btnBack" class="btn btn-warning" style="display:none; margin:auto; margin-top:40px;"/>
+
+    @section scripts {
+        <script type="text/javascript">
+            $(function () {
+                $('#btnGo').click(function (e) {
+
+                    $("#formGroup").css("display","none");
+
+                    var jsonObject = "";
+
+                    var file = document.getElementById('JsonFile').files[0];
+                    if (file) {
+                        // create reader
+                        var reader = new FileReader();
+                        reader.readAsText(file);
+                        reader.onload = function (e) {
+                            // browser completed reading file
+                            jsonObject = e.target.result;
+
+                            //Posting JSON object to action controller
+                            $.ajax({
+                                url: "@Url.Action("JsonParser")",
+                                type: "POST",
+                                data: jsonObject,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "html",
+                                error: function (response) {
+                                    alert(response.responseText);
+                                },
+                                success: function (response) {
+                                    $("#Result").html(response).css("display", "block");
+                                    $("#btnBack").css("display", "block");
+                                }
+                            });
+                        };
+                    }
+                });
             });
-        });
 
-    </script>
-}
+            $('#btnBack').click(function () {
+                location.reload();
+            });
+
+            var vid = document.getElementById("bgvid");
+
+            function vidFade() {
+                vid.classList.add("stopfade");
+            }
+
+        </script>
+    }

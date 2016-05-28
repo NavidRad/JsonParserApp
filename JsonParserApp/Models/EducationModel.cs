@@ -12,7 +12,7 @@ namespace JsonParserApp.Models
         public string StudyLevel { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
-        public string Gpa { get; set; }
+        public float Gpa { get; set; }
         public string ThesisTitle { get; set; }
     }
 }

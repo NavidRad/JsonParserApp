@@ -10,6 +10,6 @@ namespace JsonParserApp.Models
         public string Name { get; set; }
         public string Level { get; set; }
         public string Certificate { get; set; }
-        public string Score { get; set; }
+        public int Score { get; set; }
     }
 }
